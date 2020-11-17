@@ -2,10 +2,10 @@ package com.artemissoftware.androidtestpart2.di
 
 import android.content.Context
 import androidx.room.Room
-import com.artemissoftware.androidtestpart2.constants.ApiConstants
+import com.artemissoftware.androidtestpart2.util.constants.ApiConstants
 import com.artemissoftware.androidtestpart2.data.local.ShoppingItemDatabase
 import com.artemissoftware.androidtestpart2.data.remote.PixabayApi
-import com.artemissoftware.androidtestpart2.constants.DataBaseConstants
+import com.artemissoftware.androidtestpart2.util.constants.DataBaseConstants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

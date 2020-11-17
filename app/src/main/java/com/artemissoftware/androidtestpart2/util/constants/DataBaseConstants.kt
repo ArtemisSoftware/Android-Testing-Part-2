@@ -1,4 +1,4 @@
-package com.artemissoftware.androidtestpart2.constants
+package com.artemissoftware.androidtestpart2.util.constants
 
 object DataBaseConstants {
 
