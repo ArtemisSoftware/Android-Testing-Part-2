@@ -10,6 +10,7 @@ import com.artemissoftware.androidtestpart2.data.remote.responses.ImageResponse
 import com.artemissoftware.androidtestpart2.repositories.ShoppingRepository
 import com.artemissoftware.androidtestpart2.util.Event
 import com.artemissoftware.androidtestpart2.util.Resource
+import com.artemissoftware.androidtestpart2.util.constants.AppConstants
 import kotlinx.coroutines.launch
 import java.time.temporal.TemporalAmount
 
@@ -44,11 +45,43 @@ class ShoppingViewModel @ViewModelInject constructor(private val repository: Sho
         repository.insertShoppingItem(shoppingItem)
     }
 
-    fun insertShoppingItemIntoDb(name : String, amount: String, price: String){
+    fun insertShoppingItem(name : String, amount: String, price: String){
 
+        if(name.isEmpty() || amount.isEmpty() || price.isEmpty()) {
+            _insertShoppingItemStatus.postValue(Event(Resource.error("The fields must not be empty", null)))
+            return
+        }
+        if(name.length > AppConstants.MAX_NAME_LENGTH) {
+            _insertShoppingItemStatus.postValue(Event(Resource.error("The name of the item" +
+                    "must not exceed ${AppConstants.MAX_NAME_LENGTH} characters", null)))
+            return
+        }
+        if(price.length > AppConstants.MAX_PRICE_LENGTH) {
+            _insertShoppingItemStatus.postValue(Event(Resource.error("The price of the item" +
+                    "must not exceed ${AppConstants.MAX_PRICE_LENGTH} characters", null)))
+            return
+        }
+        val amount = try {
+            amount.toInt()
+        } catch(e: Exception) {
+            _insertShoppingItemStatus.postValue(Event(Resource.error("Please enter a valid amount", null)))
+            return
+        }
+        val shoppingItem = ShoppingItem(name, amount, price.toFloat(), _curImageUrl.value ?: "")
+        insertShoppingItemIntoDb(shoppingItem)
+        setCurImageUrl("")
+        _insertShoppingItemStatus.postValue(Event(Resource.success(shoppingItem)))
     }
 
     fun searchForImage(imageQuery : String){
+        if(imageQuery.isEmpty()) {
+            return
+        }
+        _images.value = Event(Resource.loading(null))
 
+        viewModelScope.launch {
+            val response = repository.searchForImage(imageQuery)
+            _images.value = Event(response)
+        }
     }
 }
