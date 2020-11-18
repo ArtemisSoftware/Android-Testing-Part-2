@@ -2,9 +2,12 @@ package com.artemissoftware.androidtestpart2.di
 
 import android.content.Context
 import androidx.room.Room
+import com.artemissoftware.androidtestpart2.data.local.ShoppingDao
 import com.artemissoftware.androidtestpart2.util.constants.ApiConstants
 import com.artemissoftware.androidtestpart2.data.local.ShoppingItemDatabase
 import com.artemissoftware.androidtestpart2.data.remote.PixabayApi
+import com.artemissoftware.androidtestpart2.repositories.DefaultShoppingRepository
+import com.artemissoftware.androidtestpart2.repositories.ShoppingRepository
 import com.artemissoftware.androidtestpart2.util.constants.DataBaseConstants
 import dagger.Module
 import dagger.Provides
@@ -23,6 +26,9 @@ object AppModule {
     @Provides
     fun provideShoppingItemDataBase(@ApplicationContext context: Context) = Room.databaseBuilder(context, ShoppingItemDatabase::class.java, DataBaseConstants.DATABASE_NAME)
 
+
+
+
     @Singleton
     @Provides
     fun provideShoppingDao(database: ShoppingItemDatabase) = database.shoppingDao()
@@ -36,6 +42,11 @@ object AppModule {
             .build()
             .create(PixabayApi::class.java)
     }
+
+
+    @Singleton
+    @Provides
+    fun provideDefaultShoppingRepository(shoppingDao: ShoppingDao, pixabayApi: PixabayApi) = DefaultShoppingRepository(shoppingDao, pixabayApi) as ShoppingRepository
 
 
 }
