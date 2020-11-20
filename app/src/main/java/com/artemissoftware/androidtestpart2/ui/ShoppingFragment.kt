@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artemissoftware.androidtestpart2.R
+import com.artemissoftware.androidtestpart2.adapters.ShoppingItemAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_shopping.*
 import javax.inject.Inject
 
-class ShoppingFragment @Inject constructor(
-    val shoppingItemAdapter: ShoppingItemAdapter,
-    var viewModel: ShoppingViewModel? = null
-) : Fragment(R.layout.fragment_shopping) {
+class ShoppingFragment @Inject constructor(val shoppingItemAdapter: ShoppingItemAdapter, var viewModel: ShoppingViewModel? = null): Fragment(R.layout.fragment_shopping) {
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel = viewModel ?: ViewModelProvider(requireActivity()).get(ShoppingViewModel::class.java)
         subscribeToObservers()
         setupRecyclerView()

@@ -1,4 +1,4 @@
-package com.artemissoftware.androidtestpart2.ui
+package com.artemissoftware.androidtestpart2.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +12,7 @@ import com.bumptech.glide.RequestManager
 import kotlinx.android.synthetic.main.item_shopping.view.*
 import javax.inject.Inject
 
-class ShoppingItemAdapter @Inject constructor(
-    private val glide: RequestManager
-) : RecyclerView.Adapter<ShoppingItemAdapter.ShoppingItemViewHolder>() {
+class ShoppingItemAdapter @Inject constructor(private val glide: RequestManager) : RecyclerView.Adapter<ShoppingItemAdapter.ShoppingItemViewHolder>() {
 
     class ShoppingItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

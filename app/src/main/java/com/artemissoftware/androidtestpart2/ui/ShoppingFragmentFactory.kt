@@ -3,6 +3,7 @@ package com.artemissoftware.androidtestpart2.ui
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.artemissoftware.androidtestpart2.adapters.ImageAdapter
+import com.artemissoftware.androidtestpart2.adapters.ShoppingItemAdapter
 import com.bumptech.glide.RequestManager
 import javax.inject.Inject
 

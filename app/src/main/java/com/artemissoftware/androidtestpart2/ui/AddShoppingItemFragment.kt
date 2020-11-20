@@ -60,19 +60,19 @@ class AddShoppingItemFragment @Inject constructor(val glide: RequestManager) : F
             it.getContentIfNotHandled()?.let { result ->
                 when(result.status) {
                     Status.SUCCESS -> {
-                        Snackbar.make(
-                            requireActivity().rootLayout,
-                            "Added Shopping Item",
-                            Snackbar.LENGTH_LONG
-                        ).show()
+//                        Snackbar.make(
+//                            requireActivity().rootLayout,
+//                            "Added Shopping Item",
+//                            Snackbar.LENGTH_LONG
+//                        ).show()
                         findNavController().popBackStack()
                     }
                     Status.ERROR -> {
-                        Snackbar.make(
-                            requireActivity().rootLayout,
-                            result.message ?: "An unknown error occcured",
-                            Snackbar.LENGTH_LONG
-                        ).show()
+//                        Snackbar.make(
+//                            requireActivity().rootLayout,
+//                            result.message ?: "An unknown error occcured",
+//                            Snackbar.LENGTH_LONG
+//                        ).show()
                     }
                     Status.LOADING -> {
                         /* NO-OP */

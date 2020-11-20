@@ -21,6 +21,7 @@ import androidx.test.espresso.action.ViewActions.swipeLeft
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.artemissoftware.androidtestpart2.TestShoppingFragmentFactory
+import com.artemissoftware.androidtestpart2.adapters.ShoppingItemAdapter
 import com.artemissoftware.androidtestpart2.data.local.ShoppingItem
 import com.artemissoftware.androidtestpart2.getOrAwaitValue
 import javax.inject.Inject
