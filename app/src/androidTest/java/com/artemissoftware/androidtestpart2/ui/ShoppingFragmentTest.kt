@@ -1,5 +1,6 @@
 package com.artemissoftware.androidtestpart2.ui
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.filters.MediumTest
@@ -16,7 +17,15 @@ import org.mockito.Mockito
 import androidx.test.espresso.Espresso.onView
 
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.swipeLeft
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.artemissoftware.androidtestpart2.TestShoppingFragmentFactory
+import com.artemissoftware.androidtestpart2.data.local.ShoppingItem
+import com.artemissoftware.androidtestpart2.getOrAwaitValue
+import javax.inject.Inject
+
+import com.google.common.truth.Truth.assertThat
 
 @MediumTest
 @HiltAndroidTest
@@ -29,6 +38,35 @@ class ShoppingFragmentTest{
     @Before
     fun setUp(){
         hiltRule.inject()
+    }
+
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Inject
+    lateinit var testFragmentFactory: TestShoppingFragmentFactory
+
+
+    @Test
+    fun swipeShoppingItem_deleteItemInDb() {
+        val shoppingItem = ShoppingItem("TEST", 1, 1f, "TEST", 1)
+        var testViewModel: ShoppingViewModel? = null
+        launchFragmentInHiltContainer<ShoppingFragment>(
+            fragmentFactory = testFragmentFactory
+        ) {
+            testViewModel = viewModel
+            viewModel?.insertShoppingItemIntoDb(shoppingItem)
+        }
+
+        onView(withId(R.id.rvShoppingItems)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<ShoppingItemAdapter.ShoppingItemViewHolder>(
+                0,
+                swipeLeft()
+            )
+        )
+
+        assertThat(testViewModel?.shoppingItems?.getOrAwaitValue()).isEmpty()
     }
 
 
